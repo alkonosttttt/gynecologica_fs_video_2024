@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="shortcut icon" href="#" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <title data-title="pageTitle">Gynecologica_FS_Video</title>
+    <meta name="pageTitleGAEvents" content="Gynecologica_FS" />
+    <script type="text/javascript">
+      const pageTitleGA = `${document.querySelector('meta[name="pageTitleGAEvents"]').content}`;
+      const pageTitle = `${document.querySelector('[data-title="pageTitle"]').textContent}`;
+    </script>
+
+    <!-- GOOGLE ANALYTICS (GA4) -->
+    <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=X-XXXXXXXXXX"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag('js', new Date());
+      gtag('config', 'X-XXXXXXXXXX');
+    </script> -->
+
+    <!-- GOOGLE ANALYTICS SEND EVENTS FUNCTION -->
+    <!-- <script type="text/javascript">
+      const sendGTAG = (eventName, property, label) => {
+        let eventProperty = new Object();
+        eventProperty = { [property]: label };
+        if (
+          window.location.origin.includes('doktornarabote') ||
+          window.location.origin.includes('smartpharma')
+        ) {
+          if (typeof gtag === 'function') {
+            gtag('event', eventName, eventProperty);
+          } else {
+            console.log(
+              '⛔️ Please define the Google Analytics function in the head tag of html file, function is NOT defined'
+            );
+          }
+        } else {
+          console.log('GA: localhost', 'event', eventName, eventProperty);
+        }
+      };
+    </script> -->
+
+    <script src="./scripts/index.js" type="module"></script>
+  </head>
+
+  <body>
+    <div class="wrapper">
+      <section class="section _1" data-id="screensObserver" id="Screen_1">
+        <div class="section__content">
+          <div class="container">
+            <div class="buttonBlock buttonBlock1">
+              <a
+                href="https://www.doktornarabote.ru/page/1002225?utm_source=ginecologica&utm_medium=fs&utm_campaign=ginecologica_fs_an_vid6_0208&utm_content=com"
+                class="button"
+                target="_blank"
+                id="creative_button"
+                label="Action_Button"
+                onclick="gtag('event', 'Buttons_Gynecologica_FS', {'Buttons_Gynecologica_FS': this.dataset.label})"
+              >
+                Узнать подробнее
+              </a>
+            </div>
+            <a
+              href="https://www.doktornarabote.ru/page/1002225?utm_source=ginecologica&utm_medium=fs&utm_campaign=ginecologica_fs_an_vid6_0208&utm_content=com"
+              class="button"
+              target="_blank"
+              id="creative_button"
+              label="Action_Button"
+              onclick="gtag('event', 'Buttons_Gynecologica_FS', {'Buttons_Gynecologica_FS': this.dataset.label})"
+            >
+              <div class="videoBlock videoBlock1 horizontal">
+                <div class="video-wrapper">
+                  <video
+                    autoplay
+                    muted
+                    controls
+                    controlsList="nodownload"
+                    width="100%"
+                    height="100%"
+                    class="video"
+                    preload="auto"
+                    data-kpi="12"
+                    data-target="Video6"
+                    data-label="Video6"
+                    id="Video6"
+                  >
+                    <source
+                      src="https://files.doktornarabote.ru/AnastasiyaKor/Fullscreen/FS_Ginekolodika_video6/ginekologika_video6_edits.mp4"
+                      type="video/mp4"
+                    />
+                  </video>
+                </div>
+              </div>
+            </a>
+
+            <div class="buttonBlock buttonBlock2">
+              <a
+                href="https://www.doktornarabote.ru/page/1002225?utm_source=ginecologica&utm_medium=fs&utm_campaign=ginecologica_fs_an_vid6_0208&utm_content=com"
+                class="button"
+                target="_blank"
+                id="creative_button"
+                label="Action_Button"
+                onclick="gtag('event', 'Buttons_Gynecologica_FS', {'Buttons_Gynecologica_FS': this.dataset.label})"
+              >
+                Узнать подробнее
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- GOOGLE ANALYTICS VIDEO VIEWS -->
+    <!-- <script type="text/javascript">
+      const videos = document.querySelectorAll('video');
+
+      videos.forEach((video) => {
+        let timer = null;
+        let sec = 0;
+
+        const startTimer = function startTimer(eventName, property, label, duration, kpi) {
+          return setInterval(() => {
+            const seconds = sec + 1;
+            const minutes = Math.floor(seconds / 60);
+
+            // GOOGLE ANALYTICS:
+            switch (true) {
+              case seconds === 1:
+                sendGTAG(eventName, property, `${label} - start`);
+                break;
+              case seconds > 0 && seconds < 30:
+                if (seconds % 5 === 0) {
+                  sendGTAG(eventName, property, `${label} - ${seconds}s`);
+                }
+                break;
+              case seconds >= 30 && seconds < 60:
+                if (seconds % 15 === 0) {
+                  sendGTAG(eventName, property, `${label} - ${seconds}s`);
+                }
+                break;
+              case seconds >= 60 && seconds < duration:
+                if (seconds % 15 === 0) {
+                  switch (true) {
+                    case seconds - minutes * 60 !== 0:
+                      sendGTAG(
+                        eventName,
+                        property,
+                        `${label} - ${minutes}m ${seconds - minutes * 60}s`
+                      );
+                      break;
+                    default:
+                      sendGTAG(eventName, property, `${label} - ${minutes}m`);
+                      break;
+                  }
+                }
+                break;
+              case seconds === duration:
+                sendGTAG(eventName, property, `${label} - end`);
+                break;
+            }
+
+            sec++;
+          }, 1000);
+        };
+
+        const stopTimer = () => clearInterval(timer);
+
+        video.addEventListener('play', () => {
+          const durationReal = Math.floor(video.duration);
+          const duration = durationReal - 5;
+          const eventName = `Video_${pageTitleGA}`;
+          const property = `Video_${pageTitleGA}`;
+          const label = video.dataset.label;
+          const kpi = Number(video.dataset.kpi);
+
+          timer = startTimer(eventName, property, label, duration, kpi);
+        });
+
+        video.addEventListener('pause', () => (timer = stopTimer()));
+      });
+    </script> -->
+  </body>
+</html>

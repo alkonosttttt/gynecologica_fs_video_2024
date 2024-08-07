@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="shortcut icon" href="#" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <title data-title="pageTitle">Gynecologica_FS_Video3</title>
+    <meta name="pageTitleGAEvents" content="Gynecologica_FS" />
+    <script type="text/javascript">
+      const pageTitleGA = `${document.querySelector('meta[name="pageTitleGAEvents"]').content}`;
+      const pageTitle = `${document.querySelector('[data-title="pageTitle"]').textContent}`;
+    </script>
+
+    <!-- GOOGLE ANALYTICS (GA4) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-LXNSDHV84Q"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag('js', new Date());
+      gtag('config', 'G-LXNSDHV84Q');
+    </script>
+
+    <!-- GOOGLE ANALYTICS SEND EVENTS FUNCTION -->
+    <script type="text/javascript">
+      const sendGTAG = (eventName, property, label) => {
+        let eventProperty = new Object();
+        eventProperty = { [property]: label };
+        if (
+          window.location.origin.includes('doktornarabote') ||
+          window.location.origin.includes('smartpharma')
+        ) {
+          if (typeof gtag === 'function') {
+            gtag('event', eventName, eventProperty);
+          } else {
+            console.log(
+              '⛔️ Please define the Google Analytics function in the head tag of html file, function is NOT defined'
+            );
+          }
+        } else {
+          console.log('GA: localhost', 'event', eventName, eventProperty);
+        }
+      };
+    </script>
+
+    <script src="./scripts/index.js" type="module"></script>
+  </head>
+
+  <body>
+    <div class="wrapper">
+      <section class="section _1" data-id="screensObserver" id="Screen_1">
+        <div class="section__content">
+          <div class="block"></div>
+        </div>
+      </section>
+    </div>
+
+    <!-- GOOGLE ANALYTICS (GA4 + YM) VIDEO VIEWS -->
+    <script type="text/javascript">
+      const videos = document.querySelectorAll('video');
+
+      videos.forEach((video) => {
+        let timer = null;
+        let sec = 0;
+
+        const startTimer = function startTimer(eventName, property, label, duration, kpi) {
+          return setInterval(() => {
+            const seconds = sec + 1;
+            const minutes = Math.floor(seconds / 60);
+
+            // GOOGLE ANALYTICS:
+            switch (true) {
+              case seconds === 1: // Старт видео (с 1 секунды):
+                sendGTAG(eventName, property, `${label} - start`);
+                break;
+              case seconds > 0 && seconds < 30:
+                if (seconds % 5 === 0) {
+                  sendGTAG(eventName, property, `${label} - ${seconds}s`);
+                }
+                break;
+              case seconds >= 30 && seconds < 60:
+                if (seconds % 15 === 0) {
+                  sendGTAG(eventName, property, `${label} - ${seconds}s`);
+                }
+                break;
+              case seconds >= 60 && seconds < duration:
+                // после первых 60 секунд конвертим секунды в минуты и каждые 15 секунд опрокидываем событие вида, например, 1m 45s, далее 2m, далее 2m 15s и т.д.:
+                if (seconds % 15 === 0) {
+                  switch (true) {
+                    case seconds - minutes * 60 !== 0:
+                      sendGTAG(
+                        eventName,
+                        property,
+                        `${label} - ${minutes}m ${seconds - minutes * 60}s`
+                      );
+                      break;
+                    default:
+                      sendGTAG(eventName, property, `${label} - ${minutes}m`);
+                      break;
+                  }
+                }
+                break;
+              case seconds === duration: // Конец видео:
+                sendGTAG(eventName, property, `${label} - end`);
+                break;
+            }
+
+            // YM:
+            switch (true) {
+              // START
+              case seconds === 1:
+                sendYM(`${label} - start`);
+                // console.log(`${label} - start`);
+                break;
+              // INTERVALS
+              case seconds === 15:
+                sendYM(`${label} - 15s`);
+                // console.log(`${label} - 15s`);
+                break;
+              case seconds === 30:
+                sendYM(`${label} - 30s`);
+                // console.log(`${label} - 30s`);
+                break;
+              case seconds === 60:
+                sendYM(`${label} - 1m`);
+                // console.log(`${label} - 1m`);
+                break;
+              // KPI - задать в СЕКУНДАХ цель KPI для каждого видео в аттрибуте data-kpi="" (согласовать KPI с КАМом)
+              case seconds === kpi:
+                if (kpi >= 60) {
+                  if (kpi % 60 === 0) {
+                    sendYM(`${label}(KPI) - ${kpi / 60}m`);
+                    // console.log(`${label}(KPI) - ${kpi / 60}m`);
+                  } else {
+                    sendYM(`${label}(KPI) - ${Math.floor(kpi / 60)}m ${kpi % 60}s`);
+                    // console.log(`${label}(KPI) - ${Math.floor(kpi / 60)}m ${kpi % 60}s`);
+                  }
+                } else {
+                  sendYM(`${label}(KPI) - ${kpi}s`);
+                  // console.log(`${label}(KPI) - ${kpi}s`);
+                }
+                break;
+              // END
+              case seconds === duration:
+                sendYM(`${label} - end`);
+                // console.log(`${label} - end`);
+                break;
+            }
+            sec++;
+          }, 1000);
+        };
+
+        const stopTimer = () => clearInterval(timer);
+
+        video.addEventListener('play', () => {
+          const durationReal = Math.floor(video.duration);
+          const duration = durationReal - 5; // Конец видео (продолжительность видео минус 5 сек)
+          const eventName = `Video_${pageTitleGA}`;
+          const property = `Video_${pageTitleGA}`;
+          const label = video.dataset.label;
+          const kpi = Number(video.dataset.kpi);
+
+          timer = startTimer(eventName, property, label, duration, kpi);
+        });
+
+        video.addEventListener('pause', () => (timer = stopTimer()));
+      });
+    </script>
+  </body>
+</html>
